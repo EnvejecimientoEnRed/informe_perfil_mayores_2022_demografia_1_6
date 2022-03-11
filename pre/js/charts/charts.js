@@ -33,7 +33,7 @@ export function initChart(iframe) {
         if (error) throw error;
 
         data.sort(function(x, y){
-            return d3.descending(x.porc_total_grupo, y.porc_total_grupo);
+            return d3.descending(+x.porc_total_grupo, +y.porc_total_grupo);
         })
 
         let margin = {top: 20, right: 30, bottom: 40, left: 90},
@@ -48,7 +48,7 @@ export function initChart(iframe) {
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         let x = d3.scaleLinear()
-            .domain([0, 30])
+            .domain([0, 40])
             .range([ 0, width]);
 
         svg.append("g")
@@ -110,13 +110,13 @@ export function initChart(iframe) {
         setRRSSLinks('porc_personas_mayores_espana');
 
         //Captura de pantalla de la visualización
-        setChartCanvas();
+        //setChartCanvas();
         setCustomCanvas();
 
         let pngDownload = document.getElementById('pngImage');
 
         pngDownload.addEventListener('click', function(){
-            setChartCanvasImage('porc_personas_mayores_espana');
+            //setChartCanvasImage('porc_personas_mayores_espana');
             setChartCustomCanvasImage('porc_personas_mayores_espana');
         });
 
