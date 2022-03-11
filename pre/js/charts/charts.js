@@ -32,6 +32,10 @@ export function initChart(iframe) {
     d3.csv('https://raw.githubusercontent.com/CarlosMunozDiazCSIC/informe_perfil_mayores_2022_demografia_1_7/main/data/poblacion_anciana_ccaa.csv', function(error,data) {
         if (error) throw error;
 
+        data.sort(function(x, y){
+            return d3.descending(x.porc_total_grupo, y.porc_total_grupo);
+        })
+
         let margin = {top: 20, right: 30, bottom: 40, left: 90},
             width = document.getElementById('chart').clientWidth - margin.left - margin.right,
             height = document.getElementById('chart').clientHeight - margin.top - margin.bottom;
@@ -49,10 +53,7 @@ export function initChart(iframe) {
 
         svg.append("g")
             .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x))
-            .selectAll("text")
-                .attr("transform", "translate(-10,0)rotate(-45)")
-                .style("text-anchor", "end");
+            .call(d3.axisBottom(x));
 
         let y = d3.scaleBand()
                 .range([ 0, height ])
@@ -61,8 +62,6 @@ export function initChart(iframe) {
 
         svg.append("g")
             .call(d3.axisLeft(y));
-
-
 
         function init() {
             svg.selectAll("bars")
@@ -73,7 +72,13 @@ export function initChart(iframe) {
                 .attr("y", function(d) { return y(d.NOMAUTO); })
                 .attr("width", function(d) { return x(d.porc_total_grupo); })
                 .attr("height", y.bandwidth() )
-                .attr("fill", "#69b3a2")
+                .attr("fill", function(d) {
+                    if (d.CODAUTO != 20) {
+                        return '#F8B05C';
+                    } else {
+                        return '#BF2727';
+                    }
+                })
         }
 
         function animateChart() {
