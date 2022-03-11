@@ -57,7 +57,7 @@ export function initChart(iframe) {
 
         let y = d3.scaleBand()
                 .range([ 0, height ])
-                .domain(data.map(function(d) { return d.NOMAUTO; }))
+                .domain(data.map(function(d) { return d.NOMAUTO_2; }))
                 .padding(.1);
 
         svg.append("g")
@@ -69,7 +69,7 @@ export function initChart(iframe) {
                 .enter()
                 .append("rect")
                 .attr("x", x(0) )
-                .attr("y", function(d) { return y(d.NOMAUTO); })
+                .attr("y", function(d) { return y(d.NOMAUTO_2); })
                 .attr("width", function(d) { return x(d.porc_total_grupo); })
                 .attr("height", y.bandwidth() )
                 .attr("fill", function(d) {
