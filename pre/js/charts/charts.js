@@ -29,17 +29,55 @@ export function initChart(iframe) {
     //Creación de otros elementos relativos al gráfico que no requieran lectura previa de datos > Selectores múltiples o simples, timelines, etc 
 
     //Lectura de datos
-    d3.csv('https://raw.githubusercontent.com/CarlosMunozDiazCSIC/informe-perfil-mayores-2022-demografia/main/data/poblacion_anciana_ccaa.csv', function(error,data) {
+    d3.csv('https://raw.githubusercontent.com/CarlosMunozDiazCSIC/informe_perfil_mayores_2022_demografia_1_7/main/data/poblacion_anciana_ccaa.csv', function(error,data) {
         if (error) throw error;
 
-        console.log(data);
+        let margin = {top: 20, right: 30, bottom: 40, left: 90},
+            width = document.getElementById('chart').clientWidth - margin.left - margin.right,
+            height = document.getElementById('chart').clientHeight - margin.top - margin.bottom;
+
+        let svg = d3.select("#chart")
+        .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        let x = d3.scaleLinear()
+            .domain([0, 30])
+            .range([ 0, width]);
+
+        svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+                .attr("transform", "translate(-10,0)rotate(-45)")
+                .style("text-anchor", "end");
+
+        let y = d3.scaleBand()
+                .range([ 0, height ])
+                .domain(data.map(function(d) { return d.NOMAUTO; }))
+                .padding(.1);
+
+        svg.append("g")
+            .call(d3.axisLeft(y));
+
+
 
         function init() {
-
+            svg.selectAll("bars")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("x", x(0) )
+                .attr("y", function(d) { return y(d.NOMAUTO); })
+                .attr("width", function(d) { return x(d.porc_total_grupo); })
+                .attr("height", y.bandwidth() )
+                .attr("fill", "#69b3a2")
         }
 
         function animateChart() {
-            
+
         }
 
         /////
