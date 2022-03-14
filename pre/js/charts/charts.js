@@ -34,7 +34,7 @@ export function initChart(iframe) {
 
         data.sort(function(x, y){
             return d3.descending(+x.porc_total_grupo, +y.porc_total_grupo);
-        })
+        });
 
         let margin = {top: 20, right: 30, bottom: 40, left: 90},
             width = document.getElementById('chart').clientWidth - margin.left - margin.right,
@@ -48,7 +48,7 @@ export function initChart(iframe) {
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         let x = d3.scaleLinear()
-            .domain([0, 40])
+            .domain([0, 30])
             .range([ 0, width]);
 
         svg.append("g")
@@ -68,9 +68,10 @@ export function initChart(iframe) {
                 .data(data)
                 .enter()
                 .append("rect")
+                .attr('class','bars')
                 .attr("x", x(0) )
                 .attr("y", function(d) { return y(d.NOMAUTO_2); })
-                .attr("width", function(d) { return x(d.porc_total_grupo); })
+                .attr("width", function(d) { return x(0); })
                 .attr("height", y.bandwidth() )
                 .attr("fill", function(d) {
                     if (d.CODAUTO != 20) {
@@ -79,10 +80,18 @@ export function initChart(iframe) {
                         return '#BF2727';
                     }
                 })
+                .transition()
+                .duration(1500)
+                .attr("width", function(d) { return x(d.porc_total_grupo); })
+
         }
 
         function animateChart() {
-
+            svg.selectAll(".bars")
+                .attr("width", function(d) { return x(0); })
+                .transition()
+                .duration(1500)
+                .attr("width", function(d) { return x(d.porc_total_grupo); })
         }
 
         /////
@@ -104,7 +113,7 @@ export function initChart(iframe) {
         /////
 
         //Iframe
-        setFixedIframeUrl('informe_perfil_mayores_2022_demografia_1_7','porc_personas_mayores_espana');
+        setFixedIframeUrl('informe_perfil_mayores_2022_demografia_1_7', 'porc_personas_mayores_espana');
 
         //Redes sociales > Antes tenemos que indicar cuál sería el texto a enviar
         setRRSSLinks('porc_personas_mayores_espana');
