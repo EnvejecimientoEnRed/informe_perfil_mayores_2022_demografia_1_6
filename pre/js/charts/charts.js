@@ -20,14 +20,6 @@ COLOR_OTHER_1 = '#B58753',
 COLOR_OTHER_2 = '#731854';
 
 export function initChart(iframe) {
-    //Desarrollo de funciones asociadas al gráfico > Título, subtítulo, notas, fuente de datos
-    document.getElementById('title').textContent = 'Figura 1.6. Personas con 65 y más años en España a nivel autonómico, 2021';
-    document.getElementById('subtitle').textContent = 'Datos en porcentaje.';
-    document.getElementById('data-source').textContent = 'Instituto Nacional de Estadística (INE): Estadística del Padrón continuo a 1 de enero de 2021. Consulta: febrero de 2022';
-    document.getElementById('data-note').textContent = '';
-
-    //Creación de otros elementos relativos al gráfico que no requieran lectura previa de datos > Selectores múltiples o simples, timelines, etc 
-
     //Lectura de datos
     d3.csv('https://raw.githubusercontent.com/CarlosMunozDiazCSIC/informe_perfil_mayores_2022_demografia_1_7/main/data/poblacion_anciana_ccaa.csv', function(error,data) {
         if (error) throw error;
