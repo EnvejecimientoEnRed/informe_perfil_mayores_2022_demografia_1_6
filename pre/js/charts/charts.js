@@ -21,7 +21,7 @@ COLOR_OTHER_2 = '#731854';
 
 export function initChart(iframe) {
     //Lectura de datos
-    d3.csv('https://raw.githubusercontent.com/CarlosMunozDiazCSIC/informe_perfil_mayores_2022_demografia_1_7/main/data/poblacion_anciana_ccaa.csv', function(error,data) {
+    d3.csv('https://raw.githubusercontent.com/CarlosMunozDiazCSIC/informe_perfil_mayores_2022_demografia_1_6/main/data/poblacion_anciana_ccaa.csv', function(error,data) {
         if (error) throw error;
 
         data.sort(function(x, y){
@@ -67,14 +67,14 @@ export function initChart(iframe) {
                 .attr("height", y.bandwidth() )
                 .attr("fill", function(d) {
                     if (d.CODAUTO != 20) {
-                        return '#F8B05C';
+                        return COLOR_PRIMARY_1;
                     } else {
-                        return '#BF2727';
+                        return COLOR_ANAG_2;
                     }
                 })
                 .transition()
                 .duration(1500)
-                .attr("width", function(d) { return x(d.porc_total_grupo); })
+                .attr("width", function(d) { return x(+d.porc_total_grupo); });
 
         }
 
@@ -83,7 +83,7 @@ export function initChart(iframe) {
                 .attr("width", function(d) { return x(0); })
                 .transition()
                 .duration(1500)
-                .attr("width", function(d) { return x(d.porc_total_grupo); })
+                .attr("width", function(d) { return x(+d.porc_total_grupo); })
         }
 
         /////
@@ -105,7 +105,7 @@ export function initChart(iframe) {
         /////
 
         //Iframe
-        setFixedIframeUrl('informe_perfil_mayores_2022_demografia_1_7', 'porc_personas_mayores_espana');
+        setFixedIframeUrl('informe_perfil_mayores_2022_demografia_1_6', 'porc_personas_mayores_espana');
 
         //Redes sociales > Antes tenemos que indicar cuál sería el texto a enviar
         setRRSSLinks('porc_personas_mayores_espana');
