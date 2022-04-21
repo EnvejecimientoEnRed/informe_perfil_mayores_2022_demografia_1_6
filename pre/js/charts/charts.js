@@ -72,7 +72,9 @@ export function initChart(iframe) {
                 .data(data)
                 .enter()
                 .append("rect")
-                .attr('class','rect')
+                .attr('class',function(d) {
+                    return 'rect ' + d.NOMAUTO_2;
+                })
                 .attr("x", x(0) )
                 .attr("y", function(d) { return y(d.NOMAUTO_2); })
                 .attr("width", function(d) { return x(0); })
@@ -92,16 +94,21 @@ export function initChart(iframe) {
                     });
                     this.style.opacity = '1';
 
-                    //Texto
-                    let html = '<p class="chart__tooltip--title">' + d.NOMAUTO_2 + '</p>' + 
-                    '<p class="chart__tooltip--text">Un ' + numberWithCommas3(parseFloat(d.porc_total_grupo).toFixed(1)) + '% de habitantes de esta autonomía tiene 65 años o más.</p>' +
-                    '<p class="chart__tooltip--text">En cuanto a la división por sexos, un ' + numberWithCommas3(parseFloat(d.porc_total_hombres).toFixed(1)) + '% de los hombres y un ' + numberWithCommas3(parseFloat(d.porc_total_mujeres).toFixed(1)) + '% de las mujeres tiene 65 o más.</p>';
-            
-                    tooltip.html(html);
+                    //Display texto
+                    let currentItem = this.classList[1];
+                    let textItem = document.getElementsByClassName('text-'+currentItem)[0];
+                    textItem.style.display = 'block';
 
-                    //Tooltip
-                    positionTooltip(window.event, tooltip);
-                    getInTooltip(tooltip);
+                    //Texto
+                    // let html = '<p class="chart__tooltip--title">' + d.NOMAUTO_2 + '</p>' + 
+                    // '<p class="chart__tooltip--text">Un ' + numberWithCommas3(parseFloat(d.porc_total_grupo).toFixed(1)) + '% de habitantes de esta autonomía tiene 65 años o más.</p>' +
+                    // '<p class="chart__tooltip--text">En cuanto a la división por sexos, un ' + numberWithCommas3(parseFloat(d.porc_total_hombres).toFixed(1)) + '% de los hombres y un ' + numberWithCommas3(parseFloat(d.porc_total_mujeres).toFixed(1)) + '% de las mujeres tiene 65 o más.</p>';
+            
+                    // tooltip.html(html);
+
+                    // //Tooltip
+                    // positionTooltip(window.event, tooltip);
+                    // getInTooltip(tooltip);
                 })
                 .on('mouseout', function(d,i,e) {
                     //Quitamos los estilos de la línea
@@ -109,13 +116,32 @@ export function initChart(iframe) {
                     bars.each(function() {
                         this.style.opacity = '1';
                     });
+
+                    //Display texto
+                    let currentItem = this.classList[1];
+                    let textItem = document.getElementsByClassName('text-'+currentItem)[0];
+                    textItem.style.display = 'none';
                 
                     //Quitamos el tooltip
-                    getOutTooltip(tooltip);
+                    //getOutTooltip(tooltip);
                 })
                 .transition()
                 .duration(2000)
                 .attr("width", function(d) { return x(+d.porc_total_grupo); });
+
+            //Prueba texto
+            svg.selectAll('texto')
+                .data(data)
+                .enter()
+                .append('text')
+                .attr('class', function(d) {
+                    return 'text text-' + d.NOMAUTO_2;
+                })
+                .attr("x", function(d) { return x(+d.porc_total_grupo) + 5; })
+                .attr("y", function(d) { return y(d.NOMAUTO_2) + 6.5; })
+                .attr("dy", ".35em")
+                .style('display','none')
+                .text(function(d) { return numberWithCommas3(d.porc_total_grupo) + '%'; });
 
         }
 
