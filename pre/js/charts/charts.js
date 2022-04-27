@@ -12,7 +12,7 @@ const COLOR_PRIMARY_1 = '#F8B05C',
 COLOR_ANAG_PRIM_3 = '#9E3515';
 let tooltip = d3.select('#tooltip');
 
-export function initChart(iframe) {
+export function initChart() {
     //Lectura de datos
     d3.csv('https://raw.githubusercontent.com/CarlosMunozDiazCSIC/informe_perfil_mayores_2022_demografia_1_6/main/data/poblacion_anciana_ccaa.csv', function(error,data) {
         if (error) throw error;
@@ -55,12 +55,13 @@ export function initChart(iframe) {
             .call(xAxis);
 
         let y = d3.scaleBand()
-                .range([ 0, height ])
-                .domain(data.map(function(d) { return d.NOMAUTO_2; }))
-                .padding(.1);
+            .range([ 0, height ])
+            .domain(data.map(function(d) { return d.NOMAUTO_2; }))
+            .padding(.1);
 
         let yAxis = function(svg) {
             svg.call(d3.axisLeft(y));
+            svg.call(function(g){g.selectAll('.domain').remove()});
             svg.call(function(g){g.selectAll('.tick line').remove()});
         }
 
@@ -163,6 +164,10 @@ export function initChart(iframe) {
         //Animación del gráfico
         document.getElementById('replay').addEventListener('click', function() {
             animateChart();
+
+            setTimeout(() => {
+                setChartCanvas();
+            }, 4000);
         });
 
         /////
@@ -178,7 +183,9 @@ export function initChart(iframe) {
         setRRSSLinks('porc_personas_mayores_espana');
 
         //Captura de pantalla de la visualización
-        setChartCanvas();
+        setTimeout(() => {
+            setChartCanvas();
+        }, 4000);
 
         let pngDownload = document.getElementById('pngImage');
 
