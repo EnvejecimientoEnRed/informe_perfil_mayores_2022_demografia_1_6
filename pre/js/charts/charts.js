@@ -21,7 +21,7 @@ export function initChart() {
             return d3.descending(+x.porc_total_grupo, +y.porc_total_grupo);
         });
 
-        let margin = {top: 10, right: 10, bottom: 20, left: 90},
+        let margin = {top: 12.5, right: 10, bottom: 25, left: 90},
             width = document.getElementById('chart').clientWidth - margin.left - margin.right,
             height = document.getElementById('chart').clientHeight - margin.top - margin.bottom;
 
@@ -96,20 +96,20 @@ export function initChart() {
                     this.style.opacity = '1';
 
                     //Display texto
-                    let currentItem = this.classList[1];
-                    let textItem = document.getElementsByClassName('text-'+currentItem)[0];
-                    textItem.style.display = 'block';
+                    // let currentItem = this.classList[1];
+                    // let textItem = document.getElementsByClassName('text-'+currentItem)[0];
+                    // textItem.style.display = 'block';
 
                     //Texto
-                    // let html = '<p class="chart__tooltip--title">' + d.NOMAUTO_2 + '</p>' + 
-                    // '<p class="chart__tooltip--text">Un ' + numberWithCommas3(parseFloat(d.porc_total_grupo).toFixed(1)) + '% de habitantes de esta autonomía tiene 65 años o más.</p>' +
-                    // '<p class="chart__tooltip--text">En cuanto a la división por sexos, un ' + numberWithCommas3(parseFloat(d.porc_total_hombres).toFixed(1)) + '% de los hombres y un ' + numberWithCommas3(parseFloat(d.porc_total_mujeres).toFixed(1)) + '% de las mujeres tiene 65 o más.</p>';
+                    let html = '<p class="chart__tooltip--title">' + d.NOMAUTO_2 + '</p>' + 
+                    '<p class="chart__tooltip--text">Un <b>' + numberWithCommas3(parseFloat(d.porc_total_grupo).toFixed(1)) + '%</b> de habitantes de esta autonomía tiene 65 años o más.</p>' +
+                    '<p class="chart__tooltip--text">En cuanto a la división por sexos, un ' + numberWithCommas3(parseFloat(d.porc_total_hombres).toFixed(1)) + '% de los hombres y un ' + numberWithCommas3(parseFloat(d.porc_total_mujeres).toFixed(1)) + '% de las mujeres tiene 65 o más.</p>';
             
-                    // tooltip.html(html);
+                    tooltip.html(html);
 
-                    // //Tooltip
-                    // positionTooltip(window.event, tooltip);
-                    // getInTooltip(tooltip);
+                    //Tooltip
+                    positionTooltip(window.event, tooltip);
+                    getInTooltip(tooltip);
                 })
                 .on('mouseout', function(d,i,e) {
                     //Quitamos los estilos de la línea
@@ -119,30 +119,30 @@ export function initChart() {
                     });
 
                     //Display texto
-                    let currentItem = this.classList[1];
-                    let textItem = document.getElementsByClassName('text-'+currentItem)[0];
-                    textItem.style.display = 'none';
+                    // let currentItem = this.classList[1];
+                    // let textItem = document.getElementsByClassName('text-'+currentItem)[0];
+                    // textItem.style.display = 'none';
                 
                     //Quitamos el tooltip
-                    //getOutTooltip(tooltip);
+                    getOutTooltip(tooltip);
                 })
                 .transition()
                 .duration(2000)
                 .attr("width", function(d) { return x(+d.porc_total_grupo); });
 
             //Prueba texto
-            svg.selectAll('texto')
-                .data(data)
-                .enter()
-                .append('text')
-                .attr('class', function(d) {
-                    return 'text text-' + d.NOMAUTO_2;
-                })
-                .attr("x", function(d) { return x(+d.porc_total_grupo) + 5; })
-                .attr("y", function(d) { return y(d.NOMAUTO_2) + 6.5; })
-                .attr("dy", ".35em")
-                .style('display','none')
-                .text(function(d) { return numberWithCommas3(d.porc_total_grupo) + '%'; });
+            // svg.selectAll('texto')
+            //     .data(data)
+            //     .enter()
+            //     .append('text')
+            //     .attr('class', function(d) {
+            //         return 'text text-' + d.NOMAUTO_2;
+            //     })
+            //     .attr("x", function(d) { return x(+d.porc_total_grupo) + 5; })
+            //     .attr("y", function(d) { return y(d.NOMAUTO_2) + 6.5; })
+            //     .attr("dy", ".35em")
+            //     .style('display','none')
+            //     .text(function(d) { return numberWithCommas3(d.porc_total_grupo) + '%'; });
 
         }
 
