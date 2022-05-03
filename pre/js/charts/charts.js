@@ -103,7 +103,7 @@ export function initChart() {
                     //Texto
                     let html = '<p class="chart__tooltip--title">' + d.NOMAUTO_2 + '</p>' + 
                     '<p class="chart__tooltip--text">Un <b>' + numberWithCommas3(parseFloat(d.porc_total_grupo).toFixed(1)) + '%</b> de habitantes de esta autonomía tiene 65 años o más.</p>' +
-                    '<p class="chart__tooltip--text">En cuanto a la división por sexos, un ' + numberWithCommas3(parseFloat(d.porc_total_hombres).toFixed(1)) + '% de los hombres y un ' + numberWithCommas3(parseFloat(d.porc_total_mujeres).toFixed(1)) + '% de las mujeres tiene 65 o más.</p>';
+                    '<p class="chart__tooltip--text">En cuanto a la división por sexos, un <b>' + numberWithCommas3(parseFloat(d.porc_total_hombres).toFixed(1)) + '%</b> de los hombres y un <b>' + numberWithCommas3(parseFloat(d.porc_total_mujeres).toFixed(1)) + '%</b> de las mujeres tiene 65 o más.</p>';
             
                     tooltip.html(html);
 
