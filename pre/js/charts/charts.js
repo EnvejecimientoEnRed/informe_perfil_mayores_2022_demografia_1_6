@@ -194,6 +194,6 @@ export function initChart() {
         });
 
         //Altura del frame
-        setChartHeight(iframe);
+        setChartHeight();
     });    
 }
