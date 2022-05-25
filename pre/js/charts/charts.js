@@ -14,7 +14,7 @@ let tooltip = d3.select('#tooltip');
 
 export function initChart() {
     //Lectura de datos
-    d3.csv('https://raw.githubusercontent.com/CarlosMunozDiazCSIC/informe_perfil_mayores_2022_demografia_1_6/main/data/poblacion_anciana_ccaa.csv', function(error,data) {
+    d3.csv('https://raw.githubusercontent.com/EnvejecimientoEnRed/informe_perfil_mayores_2022_demografia_1_6/main/data/poblacion_anciana_ccaa.csv', function(error,data) {
         if (error) throw error;
 
         data.sort(function(x, y){
